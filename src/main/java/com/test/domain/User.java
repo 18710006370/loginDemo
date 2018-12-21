@@ -6,9 +6,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author aiet
- */
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"name"})) // 唯一约束name
 public class User {
@@ -16,11 +13,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String mobile;
     private String password;
-
     private String name;
+    private String email;
+    /**
+     * 是否通过邮箱完成激活
+     * 0-未完成
+     * 1-已完成
+     */
+    private Integer active;
+    /**
+     * 激活码
+     */
+    private String activeCode;
 
     @JsonIgnore
     @Transient

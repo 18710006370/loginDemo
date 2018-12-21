@@ -5,13 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by Luo_xuri on 2017/9/30.
- */
 @Entity
 @Table(name = "user_token")
 @Data
@@ -29,7 +25,7 @@ public class UserToken {
     @JsonFormat(pattern = "yy-MM-dd hh:mm:ss")
     private Date createtime = new Date();
 
-    public UserToken(String token){
+    public UserToken(String token) {
         this.token = token;
     }
 }

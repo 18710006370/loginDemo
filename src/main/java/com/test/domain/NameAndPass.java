@@ -1,8 +1,5 @@
 package com.test.domain;
 
-/**
- * Created by Luo_xuri on 2017/9/30.
- */
 public class NameAndPass {
 
     private String username;

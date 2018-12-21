@@ -1,13 +1,12 @@
 package com.test.auth;
 
-
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Luo_xuri on 2017/9/30.
+ * @author anonymity
  */
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {

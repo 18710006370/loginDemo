@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.test.data.RestResp.fail;
+import static com.test.common.RestResp.fail;
 import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
- * Created by Luo_xuri on 2017/9/30.
+ * @author anonymity
  */
 @Component
 public class AuthError implements AuthenticationEntryPoint, AccessDeniedHandler {
@@ -40,10 +40,7 @@ public class AuthError implements AuthenticationEntryPoint, AccessDeniedHandler 
             message += exception.getMessage();
         }
         byte[] body = new ObjectMapper().writeValueAsBytes(fail(message));
-        response
-                .getOutputStream()
-                .write(body);
-
+        response.getOutputStream().write(body);
     }
 
     @Override

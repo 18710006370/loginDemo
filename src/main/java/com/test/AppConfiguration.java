@@ -5,7 +5,6 @@ import com.test.auth.JwtAuthenticationProvider;
 import com.test.auth.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,9 +18,6 @@ import javax.annotation.Resource;
 
 import static org.springframework.http.HttpMethod.POST;
 
-/**
- * Created by Luo_xuri on 2017/9/30.
- */
 @EnableWebSecurity
 @Configurable
 public class AppConfiguration extends WebSecurityConfigurerAdapter {
@@ -43,8 +39,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(POST ,"/user/register", "/token") // 不拦截
-                .permitAll().antMatchers("/**/*") // 允许拦截
+                // 不拦截
+                .antMatchers(POST, "/user/register", "/token", "/**"/*测试加上，就不拦截*/)
+                // 允许拦截
+                .permitAll().antMatchers("/**/*")
                 .authenticated()
                 .and()
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
@@ -60,7 +58,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * allow cross origin requests
-     * 跨域相关，请百度
+     * 跨域相关
      */
     @Bean
     public WebMvcConfigurer corsConfigurer() {

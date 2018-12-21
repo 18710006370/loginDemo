@@ -2,7 +2,6 @@ package com.test.auth;
 
 import com.test.data.UserRepo;
 import com.test.domain.User;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,23 +29,27 @@ import java.util.UUID;
 import static java.util.Optional.empty;
 
 /**
- * Created by Luo_xuri on 2017/9/30.
+ * @author anonymity
  */
 @Service
 public class JwtService {
 
     private Logger LOG = LoggerFactory.getLogger(getClass());
 
-    @Value("${jwt.key.store}") private String keystore;
-    @Value("${jwt.key.pass}") private String keypass;
-    @Value("${jwt.key.alias}") private String keyalias;
-    @Value("${jwt.cert}") private String cert;
+    @Value("${jwt.key.store}")
+    private String keystore;
+    @Value("${jwt.key.pass}")
+    private String keypass;
+    @Value("${jwt.key.alias}")
+    private String keyalias;
+    @Value("${jwt.cert}")
+    private String cert;
 
     private UserRepo userRepo;
     private PrivateKey privateKey;
     private PublicKey publicKey;
 
-    public JwtService(@Autowired UserRepo userRepo){
+    public JwtService(@Autowired UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
@@ -62,7 +65,7 @@ public class JwtService {
         publicKey = x509Cert.getPublicKey();
     }
 
-    public String generate(User user){
+    public String generate(User user) {
         return new DefaultJwtBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(user.getName())
@@ -70,25 +73,16 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.ES256, privateKey).compact();
     }
 
-    Optional<JwtAuthentication> parse(String token){
+    Optional<JwtAuthentication> parse(String token) {
         try {
             Jws<Claims> jws = new DefaultJwtParser().setSigningKey(publicKey).parseClaimsJws(token);
             Claims claims = jws.getBody();
             return userRepo.findByName(claims.getSubject()).map(u -> new JwtAuthentication(u, token, claims));
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("failed to parse jwt token {}", token, e);
         }
         return empty();
     }
-
-
-
-
-
-
-
-
-
 
 
 }

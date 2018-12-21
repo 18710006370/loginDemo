@@ -1,6 +1,5 @@
 package com.test.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -10,16 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * @author aiet
+ * @author anonymity
  */
 @Component
 public class JwtTokenFilter implements Filter {
 
+    @Resource
     private JwtService jwtService;
-
-    public JwtTokenFilter(@Autowired JwtService jwtService){
-        this.jwtService = jwtService;
-    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,10 +27,10 @@ public class JwtTokenFilter implements Filter {
         String authorization = servletRequest.getHeader("Authorization");
         if (authorization != null && authorization.startsWith("Bearer ")) {
             jwtService
-              .parse(authorization.replaceAll("Bearer ", ""))
-              .ifPresent(jwtAuthentication -> SecurityContextHolder
-                .getContext()
-                .setAuthentication(jwtAuthentication));
+                    .parse(authorization.replaceAll("Bearer ", ""))
+                    .ifPresent(jwtAuthentication -> SecurityContextHolder
+                            .getContext()
+                            .setAuthentication(jwtAuthentication));
         }
         chain.doFilter(request, response);
     }

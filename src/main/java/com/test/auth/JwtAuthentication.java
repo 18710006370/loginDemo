@@ -10,8 +10,9 @@ import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 
+
 /**
- * Created by Luo_xuri on 2017/9/30.
+ * @author anonymity
  */
 public class JwtAuthentication implements Authentication {
 
@@ -19,13 +20,13 @@ public class JwtAuthentication implements Authentication {
     private User user;
     private Map<String, Object> details;
 
-    JwtAuthentication(User user, String token, Map<String, Object> details){
+    JwtAuthentication(User user, String token, Map<String, Object> details) {
         this.token = token;
         this.user = user;
         this.details = details;
     }
 
-    public Optional<User> user(){
+    public Optional<User> user() {
         return Optional.ofNullable(user);
     }
 
@@ -57,7 +58,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public void setAuthenticated(boolean b) throws IllegalArgumentException {
-        if (!isAuthenticated()){
+        if (!isAuthenticated()) {
             user = null;
         }
     }
